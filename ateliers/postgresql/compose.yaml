@@ -1,0 +1,18 @@
+name: defis-postgresql
+services:
+  db:
+    image: postgres:17.12
+    environment:
+      POSTGRES_DB: defis_lab
+      POSTGRES_USER: lab
+      # Mot de passe public de démonstration ; aucun port publié sur l'hôte.
+      POSTGRES_PASSWORD: demonstration-locale-uniquement
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d defis_lab"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - lab_data:/var/lib/postgresql/data
+volumes:
+  lab_data:
